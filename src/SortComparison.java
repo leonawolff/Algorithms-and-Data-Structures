@@ -4,14 +4,14 @@
  *  This class contains static methods that implementing sorting of an array of numbers
  *  using different sort algorithms.
  *
- *  @author
+ *  @author Leona Wolff 
  *  @version HT 2020
  */
 
 class SortComparison {
 
 	static double [] insertionSort (double a[]){
-		
+
 		for (int i = 1; i < a.length; ++i) {
 			double temp = a[i];
 			int j = i - 1;
@@ -23,13 +23,7 @@ class SortComparison {
 		}
 		return a;
 	}
-	/**
-	 * Sorts an array of doubles using Selection Sort.
-	 * This method is static, thus it can be called as SortComparison.sort(a)
-	 * @param a: An unsorted array of doubles.
-	 * @return array sorted in ascending order
-	 *
-	 */
+
 	static double [] selectionSort (double a[]){
 		for(int i = 0; i < a.length; i++) {
 			for (int j = i + 1; j < a.length; j++) {
@@ -42,16 +36,27 @@ class SortComparison {
 		return a;
 	}
 
-	/**
-	 * Sorts an array of doubles using Quick Sort.
-	 * This method is static, thus it can be called as SortComparison.sort(a)
-	 * @param a: An unsorted array of doubles.
-	 * @return array sorted in ascending order
-	 *
-	 */
-	static double [] quickSort (double a[]){
-
+	static double[] quickSort (double a[], int low, int high){
+		if (low < high) { 
+			int i = partition(a, low, high);
+            quickSort(a, low, i-1); 
+            quickSort(a, i+1, high); 
+		}
+		return a;
 	}
+
+	static int partition(double a[], int low, int high) { 
+		double pivot = a[high];  
+		int i = (low - 1);
+		for (int j = low; j < high; j++) {
+			if (a[j] < pivot) { 
+				i++; 
+				swap(a, i, j);
+			} 
+		} 
+		swap(a, (i+1), high);
+		return i+1; 
+	} 
 
 	/**
 	 * Sorts an array of doubles using Merge Sort.
@@ -70,9 +75,9 @@ class SortComparison {
 
 	static double[] mergeSortIterative (double a[]) {
 
-		//todo: implement the sort
-
-	}//end mergesortIterative
+		
+		return a;
+	}
 
 
 
@@ -86,9 +91,8 @@ class SortComparison {
 	static double[] mergeSortRecursive (double a[]) {
 
 
-		//todo: implement the sort
-
-	}//end mergeSortRecursive
+		return a;
+	}
 
 
 
@@ -100,14 +104,14 @@ class SortComparison {
 
 		//todo: do experiments as per assignment instructions
 	}
-	
+
 	static double[] swap(double a[], int b, int c) {
-		
+
 		double temp = a[b];
 		a[b] = a[c];
 		a[c] = temp;
-		
+
 		return a;
 	}
 
-}//end class
+}
