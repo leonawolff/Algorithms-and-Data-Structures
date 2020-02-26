@@ -37,6 +37,15 @@ class SortComparison {
 		return a;
 	}
 
+	static double[] quickSort(double a[]) {
+        if (a != null) {
+            quickSort(a, 0, a.length - 1);
+            return a;
+        } else {
+            return null;
+        }
+    }
+	
 	static double[] quickSort (double a[], int low, int high){
 		if (low < high) {
 			int i = partition(a, low, high);
@@ -59,6 +68,8 @@ class SortComparison {
 		return i+1; 
 	} 
 
+
+
 	static double[] mergeSortIterative(double[] a) {
 		if (a != null) {
 			int low = 0;
@@ -80,7 +91,7 @@ class SortComparison {
 			return null;
 	}
 
-	private static void merge(double[] a, double[] temp, int bottom, int mid, int top) {
+	static void merge(double[] a, double[] temp, int bottom, int mid, int top) {
 		int k = bottom, i = bottom, j = mid + 1;
 		while (i <= mid && j <= top) {
 			if (a[i] < a[j]) {
@@ -141,20 +152,20 @@ class SortComparison {
 		return a;
 	}
 
-	public static void main(String[] args) {
-
-		double a[] = {6.7, 1.32, 5.4, 9.9, 100.0, 3.1};
-		double expected[] = {1.32, 3.1, 5.4, 6.7, 9.9, 100.0};
-
-		if(Arrays.equals(selectionSort(a), expected))
-			System.out.println("Working");
-		else {
-			double[] result = selectionSort(a);
-			for(int i = 0; i < a.length; i++) {
-				System.out.println(result[i]);	
-			}
-		}
-	}
+//	static void main(String[] args) {
+//
+//		double a[] = {6.7, 1.32, 5.4, 9.9, 100.0, 3.1};
+//		double expected[] = {1.32, 3.1, 5.4, 6.7, 9.9, 100.0};
+//
+//		if(Arrays.equals(selectionSort(a), expected))
+//			System.out.println("Working");
+//		else {
+//			double[] result = selectionSort(a);
+//			for(int i = 0; i < a.length; i++) {
+//				System.out.println(result[i]);	
+//			}
+//		}
+//	}
 
 	static double[] swap(double a[], int b, int c) {
 
