@@ -7,6 +7,7 @@
  *  @author Leona Wolff 
  *  @version HT 2020
  */
+import java.util.Arrays; 
 
 class SortComparison {
 
@@ -37,10 +38,10 @@ class SortComparison {
 	}
 
 	static double[] quickSort (double a[], int low, int high){
-		if (low < high) { 
+		if (low < high) {
 			int i = partition(a, low, high);
-            quickSort(a, low, i-1); 
-            quickSort(a, i+1, high); 
+			quickSort(a, low, i-1);
+			quickSort(a, i+1, high);
 		}
 		return a;
 	}
@@ -73,9 +74,9 @@ class SortComparison {
 	 * @return after the method returns, the array must be in ascending sorted order.
 	 */
 
-	static double[] mergeSortIterative (double a[]) {
+	// Merge two sorted sub-arrays A[from .. mid] and A[mid + 1 .. to]
+	static double[] mergeSortIterative(double[] a) {
 
-		
 		return a;
 	}
 
@@ -90,19 +91,61 @@ class SortComparison {
 	 */
 	static double[] mergeSortRecursive (double a[]) {
 
+		if(a.length > 1) { 
+			int mid = a.length / 2; 
 
+			double[] left = new double[mid];
+			for(int i = 0; i < mid; i++) {
+				left[i] = a[i];
+			}
+			double[] right = new double[a.length - mid];
+			for(int i = mid; i < a.length; i++) {
+				right[i - mid] = a[i];
+			}
+			mergeSortRecursive(left);
+			mergeSortRecursive(right);
+
+			int i, j, k;
+			i = j = k = 0;
+
+			while(i < left.length && j < right.length) { 
+				if(left[i] < right[j]) { 
+					a[k] = left[i]; 
+					i++; 
+				} 
+				else { 
+					a[k] = right[j]; 
+					j++; 
+				} 
+				k++; 
+			} 
+			while(i < left.length) { 
+				a[k] = left[i]; 
+				i++; 
+				k++; 
+			} 
+			while(j < right.length) { 
+				a[k] = right[j]; 
+				j++; 
+				k++; 
+			} 
+		} 
 		return a;
 	}
 
-
-
-
-
-
-
 	public static void main(String[] args) {
 
-		//todo: do experiments as per assignment instructions
+		double a[] = {6.7, 1.32, 5.4, 9.9, 100.0, 3.1};
+		double expected[] = {1.32, 3.1, 5.4, 6.7, 9.9, 100.0};
+
+		if(Arrays.equals(mergeSortRecursive(a), expected))
+			System.out.println("Working");
+		else {
+			double[] result = mergeSortRecursive(a);
+			for(int i = 0; i < a.length; i++) {
+				System.out.println(result[i]);	
+			}
+		}
 	}
 
 	static double[] swap(double a[], int b, int c) {
