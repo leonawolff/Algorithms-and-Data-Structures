@@ -59,36 +59,44 @@ class SortComparison {
 		return i+1; 
 	} 
 
-	/**
-	 * Sorts an array of doubles using Merge Sort.
-	 * This method is static, thus it can be called as SortComparison.sort(a)
-	 * @param a: An unsorted array of doubles.
-	 * @return array sorted in ascending order
-	 *
-	 */
-	/**
-	 * Sorts an array of doubles using iterative implementation of Merge Sort.
-	 * This method is static, thus it can be called as SortComparison.sort(a)
-	 *
-	 * @param a: An unsorted array of doubles.
-	 * @return after the method returns, the array must be in ascending sorted order.
-	 */
-
-	// Merge two sorted sub-arrays A[from .. mid] and A[mid + 1 .. to]
 	static double[] mergeSortIterative(double[] a) {
+		if (a != null) {
+			int low = 0;
+			int high = a.length - 1;
 
-		return a;
+			double[] temp = Arrays.copyOf(a, a.length);
+
+			for (int m = 1; m <= high - low; m = 2 * m) {
+				for (int bottom = low; bottom < high; bottom += 2 * m) {
+					int mid = bottom + m - 1;
+					int top = bottom + 2 * m - 1;
+
+					merge(a, temp, bottom, mid, (top < high) ? top : high);
+				}
+			}
+			return a;
+		} 
+		else
+			return null;
 	}
 
+	private static void merge(double[] a, double[] temp, int bottom, int mid, int top) {
+		int k = bottom, i = bottom, j = mid + 1;
+		while (i <= mid && j <= top) {
+			if (a[i] < a[j]) {
+				temp[k++] = a[i++];
+			} else {
+				temp[k++] = a[j++];
+			}
+		}
+		while (i <= mid && i < a.length) {
+			temp[k++] = a[i++];
+		}
+		for (i = bottom; i <= top; i++) {
+			a[i] = temp[i];
+		}
+	}
 
-
-	/**
-	 * Sorts an array of doubles using recursive implementation of Merge Sort.
-	 * This method is static, thus it can be called as SortComparison.sort(a)
-	 *
-	 * @param a: An unsorted array of doubles.
-	 * @return after the method returns, the array must be in ascending sorted order.
-	 */
 	static double[] mergeSortRecursive (double a[]) {
 
 		if(a.length > 1) { 
@@ -138,10 +146,10 @@ class SortComparison {
 		double a[] = {6.7, 1.32, 5.4, 9.9, 100.0, 3.1};
 		double expected[] = {1.32, 3.1, 5.4, 6.7, 9.9, 100.0};
 
-		if(Arrays.equals(mergeSortRecursive(a), expected))
+		if(Arrays.equals(selectionSort(a), expected))
 			System.out.println("Working");
 		else {
-			double[] result = mergeSortRecursive(a);
+			double[] result = selectionSort(a);
 			for(int i = 0; i < a.length; i++) {
 				System.out.println(result[i]);	
 			}
