@@ -23,7 +23,7 @@ public class CompetitionFloydWarshall {
 
 	private int sA, sB, sC;
 	private ArrayList<Road> roads = new ArrayList<Road>();
-	int numInts;		// number of intersections 
+	private int numInts;		// number of intersections 
 
 	/**
 	 * @param filename: A filename containing the details of the city road network
@@ -131,8 +131,9 @@ public class CompetitionFloydWarshall {
 		return minutes;
 	}
 
-
-//	public double floydWarshall() {
-//		return -1.0;
-//	}
+	public int getSA() { return sA;	}
+	public int getSB() { return sB; }
+	public int getSC() { return sC; }
+	
+	public int getNumInts() { return numInts; }
 }

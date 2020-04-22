@@ -1,6 +1,7 @@
 import java.io.*; 
 import java.util.*;
-import java.lang.*; 
+import java.lang.*;
+
 
 /*
  * A Contest to Meet (ACM) is a reality TV contest that sets three contestants at three random
@@ -80,71 +81,106 @@ public class CompetitionDijkstra {
 
 		for (int i = 0; i < city.length; i++) {
 
-			double tempLongest = dijkstra(i);
+			double tempLongest = dijkstra(i);  // hmmmmm
+			if(tempLongest == -1)
+				return -1;
 
 			if (tempLongest > longestShortest)
 				longestShortest = tempLongest;			
 		}
 		if (longestShortest == Double.MAX_VALUE)
 			return -1;
-		
+
 		longestShortest = longestShortest * 1000; // converted to meters
-		
-		double result = longestShortest * slowest;
-		
+
+		double result = longestShortest/slowest;
+
 		result = Math.ceil(result);
 		int minutes = (int) result;
-		
+
 		return minutes;
 	}
 
 	public double dijkstra(int source) {
-		ArrayList<Intersection> visited = new ArrayList<Intersection>();
-		ArrayList<Intersection> unvisited = new ArrayList<Intersection>();
-		for (int i = 0; i < city.length; i++) {
-			unvisited.add(city[i]);
-		}
+
+
+		ArrayList<Integer> visited = new ArrayList<Integer>();
+		ArrayList<Integer> unvisited = new ArrayList<Integer>();
+
 		double[] distance = new double[city.length];
 		int[] previous = new int[city.length];
+
+
+		for (int i = 0; i < city.length; i++) {
+
+			unvisited.add(i);
+		}
 		for (int i = 0; i < city.length; i++) {
 			distance[i] = Integer.MAX_VALUE;
 			previous[i] = -1;
 		}
+
 		distance[source] = 0;
 		previous[source] = 0;
-		double smallest = Double.MAX_VALUE;
-		int closest = -1;
 		int current = source;
 
-		while(unvisited.size() > 0) {
-			for(int i = 0; i < city[current].numOutgoingRoads(); i++) {
-				visited.add(city[current]);
-				unvisited.remove(city[current]);
-				Road road = city[current].getOutgoingRoads(i);
-				if (unvisited.contains(city[road.getIntB()])) {
-					int nextInt = road.getIntB();
-					double tempDist = distance[current] + road.getLength();
-					if(tempDist < distance[nextInt]) {
-						distance[nextInt] = tempDist;
-						previous[nextInt] = current;						
-						if (distance[nextInt] < smallest) {
-							smallest = distance[nextInt];			// check this later. may cause conflict when things are removed from unvisited. 
-							closest = nextInt;
+		do {
+
+			double shortest = Double.MAX_VALUE;
+			int next = -1;
+
+			for (int i = 0; i < unvisited.size(); i++) {		// current = intersection in unvisited with min dist[] 
+
+				if (distance[unvisited.get(i)] < shortest) {
+					shortest = distance[unvisited.get(i)];
+					next = unvisited.get(i);
+				}
+			}
+			if (next != -1)
+				current = next;
+			else 
+				break;
+
+			if(!visited.contains(current)) {					
+				visited.add(current);
+			}
+
+			for(int j = 0; j < (unvisited.size()); j++) {
+				if(unvisited.get(j) == current) {
+					unvisited.remove(j);
+					break;
+				}
+			}
+
+//			System.out.println("Entering the bastard");
+//			System.out.println("Current = " + current);
+//			System.out.println("num outgoing roads but it's b4 the 4 loop " +city[current].numOutgoingRoads());
+
+			if((current != -1) && (city[current].numOutgoingRoads() > 0)) {
+				for(int i = 0; i < (city[current].numOutgoingRoads()); i++) {  // u are here. shoot me
+
+//					System.out.println(city[current].numOutgoingRoads() + " " + i);
+
+					Road road = city[current].getOutgoingRoads(i);
+
+					if (unvisited.contains(road.getIntB())) {
+						int nextInt = road.getIntB();
+						double tempDist = distance[current] + road.getLength();
+						if(tempDist < distance[nextInt]) {
+							distance[nextInt] = tempDist;
+							previous[nextInt] = current;
 						}
 					}
 				}
 			}
 
-			if(current != -1)
-				current = closest;
-			else 
-				return -1;											// CAREFUL NOW
-			smallest = Double.MAX_VALUE;
-		}
+		} while(unvisited.size() > 0);
+
 		double longestShort = distance[0];		
 		for (int i = 1; i < distance.length; i++){
 			if (distance[i] > longestShort){
 				longestShort = distance[i];
+//				System.out.println("longest short" + longestShort);
 			}
 		}
 		return longestShort;
