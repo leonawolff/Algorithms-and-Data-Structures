@@ -7,7 +7,7 @@ public class CompetitionTests {
 	
 	String fileName1 = "C:\\Users\\leona\\eclipse-workspace\\ShortestPath\\src\\tinyEWD.txt";
 	String fileName2 = "C:\\Users\\leona\\eclipse-workspace\\ShortestPath\\src\\1000EWD.txt";
-	String fileName3 = "kdsdbfl";
+	String fileName3 = "C:\\Users\\leona\\eclipse-workspace\\ShortestPath\\src\\input\\input-A";
 	String fileName4 = "";
 
     @Test
@@ -23,11 +23,17 @@ public class CompetitionTests {
         assertEquals("Checking with tinyEWD", 70, dijkstra.getSB());
         assertEquals("Checking with tinyEWD", 80, dijkstra.getSC());
         
-        CompetitionDijkstra dijkstra2 = new CompetitionDijkstra(fileName2, sA, sB, sC);
-        assertEquals("Checking with 1000EWD", 1000, dijkstra2.getNumInts());
-        assertEquals("Checking with 1000EWD", 60, dijkstra2.getSA());
-        assertEquals("Checking with 1000EWD", 70, dijkstra2.getSB());
-        assertEquals("Checking with 1000EWD", 80, dijkstra2.getSC());
+        dijkstra = new CompetitionDijkstra(fileName2, sA, sB, sC);
+        assertEquals("Checking with tinyEWD", 8, dijkstra.getNumInts());
+        assertEquals("Checking with tinyEWD", 60, dijkstra.getSA());
+        assertEquals("Checking with tinyEWD", 70, dijkstra.getSB());
+        assertEquals("Checking with tinyEWD", 80, dijkstra.getSC());
+        
+    	dijkstra = new CompetitionDijkstra(fileName3, sA, sB, sC);
+        assertEquals("Checking with tinyEWD", 8, dijkstra.getNumInts());
+        assertEquals("Checking with tinyEWD", 60, dijkstra.getSA());
+        assertEquals("Checking with tinyEWD", 70, dijkstra.getSB());
+        assertEquals("Checking with tinyEWD", 80, dijkstra.getSC());   
 
     }
 
@@ -55,7 +61,7 @@ public class CompetitionTests {
     @Test
     public void testFWCompetitionTimeRequired() {
     	
-    	CompetitionFloydWarshall floydWarshall = new CompetitionFloydWarshall(fileName1, 60, 70, 80); //
+    	CompetitionFloydWarshall floydWarshall = new CompetitionFloydWarshall(fileName1, 60, 70, 80); 
     	assertEquals(floydWarshall.timeRequiredforCompetition(), 31);
 
     	
@@ -64,7 +70,7 @@ public class CompetitionTests {
     @Test
     public void testDijkstraCompetitionTimeRequired() {
     	
-    	CompetitionDijkstra dijkstra = new CompetitionDijkstra(fileName1, 60, 70, 80); // hmmmmm
+    	CompetitionDijkstra dijkstra = new CompetitionDijkstra(fileName1, 60, 70, 80); 
     	assertEquals(dijkstra.timeRequiredforCompetition(), 31);
     	
     	dijkstra = new CompetitionDijkstra(fileName1, 10, 70, 80);
@@ -76,8 +82,8 @@ public class CompetitionTests {
     	dijkstra = new CompetitionDijkstra(fileName1, 60, 70, 110);
     	assertEquals(dijkstra.timeRequiredforCompetition(), -1);
     	
-//    	dijkstra = new CompetitionDijkstra(fileName2, 75, 71, 55);
-//        assertEquals(26, dijkstra.timeRequiredforCompetition());
+    	dijkstra = new CompetitionDijkstra(fileName2, 75, 71, 55);
+        assertEquals(26, dijkstra.timeRequiredforCompetition());
     	
     	
     	

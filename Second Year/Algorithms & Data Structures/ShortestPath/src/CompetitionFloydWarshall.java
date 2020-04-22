@@ -98,22 +98,36 @@ public class CompetitionFloydWarshall {
 			}
 		}
 
-		for(int i = 0; i < numInts; i++) {
-			for(int j = 0; j < numInts; j++) {
-				for(int k = 0; k < numInts; k++) {
+//		for(int i = 0; i < numInts; i++) {
+//			for(int j = 0; j < numInts; j++) {
+//				for(int k = 0; k < numInts; k++) {
+//
+//					if(distances[i][j] > distances[i][k] + distances[k][j]) {
+//						distances[i][j] = distances[i][k] + distances[k][j];
+//					}
+//				}
+//			}
+//		}
+		
+		for (int k = 0; k < numInts; k++) { 
+            // Pick all vertices as source one by one 
+            for (int i = 0; i < numInts; i++) { 
+                // Pick all vertices as destination for the 
+                // above picked source 
+                for (int j = 0; j < numInts; j++) { 
+                    // If vertex k is on the shortest path from 
+                    // i to j, then update the value of dist[i][j] 
+                    if (distances[i][k] + distances[k][j] < distances[i][j]) 
+                    	distances[i][j] = distances[i][k] + distances[k][j]; 
+                } 
+            } 
+        }
 
-					if(distances[i][j] > distances[i][k] + distances[k][j]) {
-						distances[i][j] = distances[i][k] + distances[k][j];
-					}
-				}
-			}
-		}
-
-		for(int i = 0; i < distances.length; i++) {
-			for(int j = 0; j < distances.length; j++) {			
-				System.out.println(distances[i][j]);
-			}
-		}
+//		for(int i = 0; i < distances.length; i++) {
+//			for(int j = 0; j < distances.length; j++) {			
+//				System.out.println(distances[i][j]);
+//			}
+//		}
 		
 		for(int i = 0; i < numInts; i++) {
 			for(int j = 0; j < numInts; j++) {
@@ -126,14 +140,14 @@ public class CompetitionFloydWarshall {
 
 		if (maxDistance == Double.POSITIVE_INFINITY) {
 
-			System.out.println("Bitchcoin");
+//			System.out.println("Bitchcoin");
 
 			return -1;
 		}
 
 		maxDistance = maxDistance * 1000; // converted to meters
 
-		double result = maxDistance * slowest;
+		double result = maxDistance / slowest;
 
 		result = Math.ceil(result);
 		int minutes = (int) result;
