@@ -45,7 +45,7 @@ public class CompetitionDijkstra {
 			BufferedReader in = new BufferedReader(new FileReader(cityFile));
 			String line = in.readLine();
 			numIntersections = Integer.parseInt(line);
-			this.city = new Intersection[numIntersections];
+			city = new Intersection[numIntersections];
 			for(int i = 0; i < city.length; i++) {
 				city[i] = new Intersection();
 			}
@@ -55,11 +55,11 @@ public class CompetitionDijkstra {
 				line = in.readLine();
 				if(line != null) {
 
-					String[] roadDetails = line.split("\\s+");
+					String[] roadDetails = line.trim().split("\\s+");
 					int intA = Integer.parseInt(roadDetails[0]);
 					int intB = Integer.parseInt(roadDetails[1]);
 					double length = Double.parseDouble(roadDetails[2]);
-
+					
 					city[intA].outgoingRoads.add(new Road(intA, intB, length));
 				}
 			}
@@ -73,15 +73,13 @@ public class CompetitionDijkstra {
 	 * @return int: minimum minutes that will pass before the three contestants can meet
 	 */
 	public int timeRequiredforCompetition(){
-
+		
 		if(sA < 50 || sB < 50 || sC < 50 || sA > 100 || sB > 100 || sC > 100)
 			return -1;
 		int slowest = Math.min(sA, Math.min(sB, sC));
 		double longestShortest = -1;
-
 		for (int i = 0; i < city.length; i++) {
-
-			double tempLongest = dijkstra(i);  // hmmmmm
+			double tempLongest = dijkstra(i); 
 			if(tempLongest == -1)
 				return -1;
 
@@ -102,7 +100,6 @@ public class CompetitionDijkstra {
 	}
 
 	public double dijkstra(int source) {
-
 
 		ArrayList<Integer> visited = new ArrayList<Integer>();
 		ArrayList<Integer> unvisited = new ArrayList<Integer>();
@@ -152,14 +149,8 @@ public class CompetitionDijkstra {
 				}
 			}
 
-//			System.out.println("Entering the bastard");
-//			System.out.println("Current = " + current);
-//			System.out.println("num outgoing roads but it's b4 the 4 loop " +city[current].numOutgoingRoads());
-
 			if((current != -1) && (city[current].numOutgoingRoads() > 0)) {
-				for(int i = 0; i < (city[current].numOutgoingRoads()); i++) {  // u are here. shoot me
-
-//					System.out.println(city[current].numOutgoingRoads() + " " + i);
+				for(int i = 0; i < (city[current].numOutgoingRoads()); i++) { 
 
 					Road road = city[current].getOutgoingRoads(i);
 
@@ -180,10 +171,15 @@ public class CompetitionDijkstra {
 		for (int i = 1; i < distance.length; i++){
 			if (distance[i] > longestShort){
 				longestShort = distance[i];
-//				System.out.println("longest short" + longestShort);
 			}
 		}
 		return longestShort;
 	}
+	
+	public int getSA() { return sA;	}
+	public int getSB() { return sB; }
+	public int getSC() { return sC; }
+	
+	public int getNumInts() { return city.length; }
 
 }

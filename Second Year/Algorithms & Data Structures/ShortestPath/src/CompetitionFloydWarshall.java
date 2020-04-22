@@ -44,28 +44,28 @@ public class CompetitionFloydWarshall {
 			BufferedReader in = new BufferedReader(new FileReader(cityFile));
 			String line = in.readLine();
 			numInts = Integer.parseInt(line);
-//			this.city = new Intersection[numIntersections];
-//			for(int i = 0; i < city.length; i++) {
-//				city[i] = new Intersection();
-//			}
+			//			this.city = new Intersection[numIntersections];
+			//			for(int i = 0; i < city.length; i++) {
+			//				city[i] = new Intersection();
+			//			}
 			line = in.readLine();
 			numRoads = Integer.parseInt(line);
 			for(int i = 0; i < numRoads; i++) {
 				line = in.readLine();
 				if(line != null) {
 
-					String[] roadDetails = line.split("\\s+");
+					String[] roadDetails = line.trim().split("\\s+");
 					int intA = Integer.parseInt(roadDetails[0]);
 					int intB = Integer.parseInt(roadDetails[1]);
 					double length = Double.parseDouble(roadDetails[2]);
 
 					roads.add(new Road(intA, intB, length));
-//					city[intA].outgoingRoads.add(new Road(intA, intB, length));
+					//					city[intA].outgoingRoads.add(new Road(intA, intB, length));
 				}
 			}
 			in.close();
 		} catch (Exception e) {
-//			this.city = new Intersection[0];
+			//			this.city = new Intersection[0];
 		}
 	}
 
@@ -74,7 +74,7 @@ public class CompetitionFloydWarshall {
 	 * @return int: minimum minutes that will pass before the three contestants can meet
 	 */
 	public int timeRequiredforCompetition(){
-		
+
 		if(sA < 50 || sB < 50 || sC < 50 || sA > 100 || sB > 100 || sC > 100)
 			return -1;
 		int slowest = Math.min(sA, Math.min(sB, sC));
@@ -84,7 +84,7 @@ public class CompetitionFloydWarshall {
 
 		for (int i = 0; i < numInts; i++) {
 			for (int j = 0; j < numInts; j++) {
-				distances[i][j] = Double.MAX_VALUE;
+				distances[i][j] = Double.POSITIVE_INFINITY;
 			}
 		}
 		for(int i = 0; i < numInts; i++) {
@@ -109,6 +109,12 @@ public class CompetitionFloydWarshall {
 			}
 		}
 
+		for(int i = 0; i < distances.length; i++) {
+			for(int j = 0; j < distances.length; j++) {			
+				System.out.println(distances[i][j]);
+			}
+		}
+		
 		for(int i = 0; i < numInts; i++) {
 			for(int j = 0; j < numInts; j++) {
 
@@ -118,8 +124,12 @@ public class CompetitionFloydWarshall {
 			}
 		}
 
-		if (maxDistance == Double.MAX_VALUE)
+		if (maxDistance == Double.POSITIVE_INFINITY) {
+
+			System.out.println("Bitchcoin");
+
 			return -1;
+		}
 
 		maxDistance = maxDistance * 1000; // converted to meters
 
@@ -134,6 +144,6 @@ public class CompetitionFloydWarshall {
 	public int getSA() { return sA;	}
 	public int getSB() { return sB; }
 	public int getSC() { return sC; }
-	
+
 	public int getNumInts() { return numInts; }
 }
